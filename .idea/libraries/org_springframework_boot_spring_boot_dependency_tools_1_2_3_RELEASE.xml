@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="org.springframework.boot:spring-boot-dependency-tools:1.2.3.RELEASE" type="repository">
+    <properties maven-id="org.springframework.boot:spring-boot-dependency-tools:1.2.3.RELEASE" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-dependency-tools/1.2.3.RELEASE/spring-boot-dependency-tools-1.2.3.RELEASE.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
