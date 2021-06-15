@@ -15,6 +15,7 @@ import org.springframework.test.annotation.Rollback;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)
+//@ContextConfiguration(locations =  {"classpath*:/spring/test-context.xml"})
 class UserRepositoryTests {
 
     @Autowired
@@ -27,10 +28,10 @@ class UserRepositoryTests {
     @Test
     public void testCreateUser() {
         User user = new User();
-        user.setEmail("ravikumar@gmail.com");
-        user.setPassword("ravi2020");
-        user.setFirstName("Ravi");
-        user.setLastName("Kumar");
+        user.setEmail("thematbat@gmail.com");
+        user.setPassword("KingWilson6288");
+        user.setFirstName("Matthew");
+        user.setLastName("Wilson");
 
         User savedUser = repo.save(user);
 
