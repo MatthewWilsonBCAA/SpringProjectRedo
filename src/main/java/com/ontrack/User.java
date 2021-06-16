@@ -1,4 +1,4 @@
-package com.ontrack.users;
+package com.ontrack;
 
 import javax.persistence.*;
 

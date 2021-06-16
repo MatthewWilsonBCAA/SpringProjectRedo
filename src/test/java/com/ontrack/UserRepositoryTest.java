@@ -2,20 +2,20 @@ package com.ontrack;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.ontrack.users.User;
-import com.ontrack.users.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
 
+
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @Rollback(false)
-//@ContextConfiguration(locations =  {"classpath*:/spring/test-context.xml"})
+//@ContextConfiguration(locations={"/application.properties"})
 class UserRepositoryTests {
 
     @Autowired
@@ -38,6 +38,5 @@ class UserRepositoryTests {
         User existUser = entityManager.find(User.class, savedUser.getId());
 
         assertThat(user.getEmail()).isEqualTo(existUser.getEmail());
-
     }
 }
