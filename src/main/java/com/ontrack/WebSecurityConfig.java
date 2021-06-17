@@ -1,4 +1,5 @@
 package com.ontrack;
+
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private DataSource dataSource;
 
     @Bean
-    public UserDetailsService UserDetailsService() {
+    public UserDetailsService userDetailsService() {
         return new CustomUserDetailsService();
     }
 
