@@ -16,6 +16,12 @@ public class AppController {
     @Autowired
     private UserRepository userRepo;
 
+    @Autowired
+    private ThreadRepository threadRepo;
+
+    @Autowired
+    private PostRepository postRepo;
+
     @GetMapping("")
     public String viewHomePage() {
         return "index";
@@ -44,5 +50,18 @@ public class AppController {
         model.addAttribute("listUsers", listUsers);
 
         return "users";
+    }
+
+    @GetMapping("/threads")
+    public String listThreads(Model model) {
+        List<Thread> listThread = threadRepo.findAll();
+        model.addAttribute("listThread", listThread);
+        return "threads";
+    }
+
+    @GetMapping("/posts")
+    public String listPosts(Model model) {
+        List<Post> listPost = postRepo.findAll();
+        return "posts";
     }
 }

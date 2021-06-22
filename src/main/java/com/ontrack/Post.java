@@ -3,7 +3,7 @@ package com.ontrack;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "threads")
+@Table(name = "posts")
 public class Post {
 
     @Id
