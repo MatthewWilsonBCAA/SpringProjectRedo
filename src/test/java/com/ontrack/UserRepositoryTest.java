@@ -39,4 +39,15 @@ class UserRepositoryTests {
 
         assertThat(user.getEmail()).isEqualTo(existUser.getEmail());
     }
+    @Test
+    public void testCreateThreadAndPost() {
+        Thread thread = new Thread();
+        thread.setTitle("REEEEEEE");
+        thread.setAuthor(1);
+        Post post = new Post();
+        post.setTitle("SEHGSEhaerjh");
+        post.setBody("Sdhbassrh");
+        post.setThread(1);
+        assertThat(thread.getId()).isEqualTo(post.getThread());
+    }
 }
