@@ -24,6 +24,12 @@ class UserRepositoryTests {
     @Autowired
     private UserRepository repo;
 
+    @Autowired
+    private ThreadRepository tRepo;
+
+    @Autowired
+    private PostRepository pRepo;
+
     // test methods go below
     @Test
     public void testCreateUser() {
@@ -44,6 +50,9 @@ class UserRepositoryTests {
         Thread thread = new Thread();
         thread.setTitle("REEEEEEE");
         thread.setAuthor(1);
+        Thread savedThread = tRepo.save(thread);
+        Thread existThread = entityManager.find(Thread.class, savedThread.getId());
+
         Post post = new Post();
         post.setTitle("SEHGSEhaerjh");
         post.setBody("Sdhbassrh");
