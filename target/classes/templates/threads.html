@@ -31,10 +31,10 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="post: ${listPosts}">
-                <td th:text="${post.id}">Post ID</td>
-                <td th:text="${post.title}">Title</td>
-                <td th:text="${post.body}">Body</td>
+            <tr th:each="thread: ${listThreads}">
+                <td th:text="${thread.id}">Thread ID</td>
+                <td th:text="${thread.title}">Title</td>
+                <td th:text="${thread.body}">Body</td>
             </tr>
             </tbody>
         </table>

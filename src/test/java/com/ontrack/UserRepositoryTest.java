@@ -42,11 +42,6 @@ class UserRepositoryTests {
         User savedUser = repo.save(user);
 
         User existUser = entityManager.find(User.class, savedUser.getId());
-
-        assertThat(user.getEmail()).isEqualTo(existUser.getEmail());
-    }
-    @Test
-    public void testCreateThreadAndPost() {
         Thread thread = new Thread();
         thread.setTitle("REEEEEEE");
         thread.setAuthor(1);
@@ -57,6 +52,9 @@ class UserRepositoryTests {
         post.setTitle("SEHGSEhaerjh");
         post.setBody("Sdhbassrh");
         post.setThread(1);
-        assertThat(thread.getId()).isEqualTo(post.getThread());
+        Post savedPost = pRepo.save(post);
+        Post existPost = entityManager.find(Post.class, savedPost.getId());
+        assertThat(existThread.getId()).isEqualTo(existPost.getThread());
+        assertThat(user.getEmail()).isEqualTo(existUser.getEmail());
     }
 }

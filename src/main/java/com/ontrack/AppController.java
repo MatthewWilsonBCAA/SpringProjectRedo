@@ -54,14 +54,15 @@ public class AppController {
 
     @GetMapping("/threads")
     public String listThreads(Model model) {
-        List<Thread> listThread = threadRepo.findAll();
-        model.addAttribute("listThread", listThread);
+        List<Thread> listThreads = threadRepo.findAll();
+        model.addAttribute("listThreads", listThreads);
         return "threads";
     }
 
     @GetMapping("/posts")
     public String listPosts(Model model) {
-        List<Post> listPost = postRepo.findAll();
+        List<Post> listPosts = postRepo.findAll();
+        model.addAttribute("listPosts", listPosts);
         return "posts";
     }
 }
