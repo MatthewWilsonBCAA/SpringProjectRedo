@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -51,6 +52,14 @@ public class AppController {
 
         return "users";
     }
+
+    @GetMapping("/users/profile/{id}")
+    public String showUserProfile(@PathVariable(name = "id") int id, Model model) {
+        User L_user = userRepo.getById((long) id);
+        model.addAttribute("L_user", L_user);
+        return "user_profile";
+    }
+
 
     @GetMapping("/threads")
     public String listThreads(Model model) {
