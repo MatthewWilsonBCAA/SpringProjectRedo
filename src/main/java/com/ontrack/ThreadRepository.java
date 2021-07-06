@@ -2,7 +2,10 @@ package com.ontrack;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-public interface ThreadRepository extends JpaRepository<Thread, Long> {
-    //@Query("SELECT u FROM User u WHERE u.email = ?1")
 
+import java.util.List;
+
+public interface ThreadRepository extends JpaRepository<Thread, Long> {
+    @Query("SELECT t FROM Thread t WHERE t.author = ?1")
+    public List<Thread> findThreads(int id);
 }
