@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -53,11 +55,12 @@ public class AppController {
         return "users";
     }
 
-    @GetMapping("/users/profile/{id}")
-    public String showUserProfile(@PathVariable(name = "id") int id, Model model) {
+    @RequestMapping("/users/profile/{id}")
+    public ModelAndView showUserProfile(@PathVariable(name = "id") int id) {
+        ModelAndView mav = new ModelAndView("user_profile");
         User L_user = userRepo.getById((long) id);
-        model.addAttribute("L_user", L_user);
-        return "user_profile";
+        mav.addObject("user", L_user);
+        return mav;
     }
 
 
