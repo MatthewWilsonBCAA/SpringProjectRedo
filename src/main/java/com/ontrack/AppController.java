@@ -122,9 +122,7 @@ public class AppController {
     public String processCreatePOst(@PathVariable(name = "id") int id, Post post, Principal user) {
         int userID = Math.toIntExact(userRepo.findByEmail(user.getName()).getId());
         Thread t = threadRepo.getSingularThread((long) userID);
-        System.out.println(">>>>>" + t.getTitle());
         int threadOwnerID = Math.toIntExact(t.getId());
-        System.out.println(">>>>>" + userID + ", " + threadOwnerID);
         if (userID == threadOwnerID) {
             post.setThread(id);
             postRepo.save(post);
