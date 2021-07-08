@@ -2,13 +2,12 @@ package com.ontrack;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
@@ -49,18 +48,19 @@ public class AppController {
         return "index";
     }
 
-    @GetMapping("/new_thread")
+    @RequestMapping("/new_thread")
     public String showCreateThread(Model model) {
         model.addAttribute("thread", new Thread());
         return "create_thread";
     }
-    @PostMapping("/process_new_thread")
-    public String processCreateThread(Thread thread, Principal principal) {
-        User user = (User) principal;
-        thread.setId(user.getId());
+    @RequestMapping(value = "/process_new_thread", method = RequestMethod.POST)
+    public String processCreateThread(Thread thread, Principal user) {
+        int id = Math.toIntExact(userRepo.findByEmail(user.getName()).getId());
+        thread.setAuthor(id);
+        //System.out.println(id + ">>>>>>>>>" + thread.getTitle());
         threadRepo.save(thread);
 
-        return "users";
+        return "redirect:/";
     }
 
     @GetMapping("/users")
@@ -95,7 +95,7 @@ public class AppController {
         return "threads";
     }
 
-    @RequestMapping("/threads/profile/{id}")
+    @RequestMapping("/threads/{id}")
     public ModelAndView showThread(@PathVariable(name = "id") int id) {
         ModelAndView mav = new ModelAndView("thread_detail");
         Thread t = threadRepo.getById((long) id);
