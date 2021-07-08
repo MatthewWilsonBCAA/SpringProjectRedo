@@ -8,4 +8,7 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("SELECT t FROM Post t WHERE t.thread = ?1")
     public List<Post> findPosts(int id);
+
+    @Query("SELECT t FROM Post t WHERE t.id = ?1")
+    public Post getSingularPost(Long id);
 }

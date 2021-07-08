@@ -69,7 +69,6 @@ public class AppController {
 
         return "users";
     }
-
     @RequestMapping("/users/profile/{id}")
     public ModelAndView showUserProfile(@PathVariable(name = "id") int id) {
         ModelAndView mav = new ModelAndView("user_profile");
@@ -85,15 +84,6 @@ public class AppController {
         mav.addObject("threads", L_threads);
         return mav;
     }
-
-
-//    @GetMapping("/threads")
-//    public String listThreads(Model model) {
-//        List<Thread> listThreads = threadRepo.findAll();
-//        model.addAttribute("listThreads", listThreads);
-//        return "threads";
-//    }
-
     @RequestMapping("/threads/{id}")
     public ModelAndView showThread(@PathVariable(name = "id") int id, Principal user) {
         int userID = Math.toIntExact(userRepo.findByEmail(user.getName()).getId());
@@ -114,17 +104,21 @@ public class AppController {
     }
     @RequestMapping("/threads/{id}/new_post")
     public String showCreatePost(@PathVariable(name = "id") int id, Model model) {
-        model.addAttribute("post", new Post());
+        Post ne = new Post();
+        model.addAttribute("post", ne);
         model.addAttribute("THREAD_ID", id);
         return "create_post";
     }
     @RequestMapping(value = "/threads/{id}/process_new_post", method = RequestMethod.POST)
-    public String processCreatePOst(@PathVariable(name = "id") int id, Post post, Principal user) {
+    public String processCreatePost(Post post, @PathVariable(name = "id") int id, Principal user) {
         int userID = Math.toIntExact(userRepo.findByEmail(user.getName()).getId());
         Thread t = threadRepo.getSingularThread((long) userID);
         int threadOwnerID = Math.toIntExact(t.getId());
         if (userID == threadOwnerID) {
             post.setThread(id);
+            while (postRepo.getSingularPost(post.getId()) != null) {
+                post.setId(post.getId() + 1L);
+            }
             postRepo.save(post);
             return "redirect:/threads/" + id;
         }
