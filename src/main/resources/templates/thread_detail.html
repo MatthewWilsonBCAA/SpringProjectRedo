@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="ISO-8859-1">
+  <title>List Users</title>
+  <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css" />
+  <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container text-center">
+  <div>
+    <form th:action="@{/logout}" method="post">
+      <p>
+        Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b>
+      </p>
+      <input type="submit" value="Sign Out" />
+    </form>
+  </div>
+  <div>
+    <h1>User Profile</h1>
+    <h3><a th:href="@{/users}">Back to List of Users</a></h3>
+  </div>
+
+  <div>
+    <h3 th:text="${thread.title}"></h3>
+  </div>
+  <div>
+    <table class="table table-striped table-bordered">
+      <thead class="thead-dark">
+      <tr>
+        <th>Thread ID</th>
+        <th>Title</th>
+        <th>Body</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="t: ${posts}">
+        <td th:text="${t.id}">Post ID</td>
+        <td th:text="${t.title}">Title</td>
+        <td th:text="${t.body}">Body</td>
+      </tr>
+      </tbody>
+    </table>
+    <td>
+      <span th:if="${CUR_USER_ID == thread.author}">
+          <a th:href="@{'/threads/' + ${thread.id} + '/new_post'}">Click here to make an new post!</a>
+      </span>
+    </td>
+  </div>
+</div>
+</body>
+</html>

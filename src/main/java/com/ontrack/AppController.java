@@ -57,7 +57,6 @@ public class AppController {
     public String processCreateThread(Thread thread, Principal user) {
         int id = Math.toIntExact(userRepo.findByEmail(user.getName()).getId());
         thread.setAuthor(id);
-        //System.out.println(id + ">>>>>>>>>" + thread.getTitle());
         threadRepo.save(thread);
 
         return "redirect:/";
@@ -78,7 +77,7 @@ public class AppController {
         List<Thread> L_threads = threadRepo.findThreads(id);
         if (L_threads.size() == 0) {
             Thread zThread = new Thread();
-            zThread.setTitle("NO THREADS");
+            zThread.setTitle("No Threads");
             zThread.setId((long) 0);
             L_threads.add(zThread);
         }
@@ -88,21 +87,56 @@ public class AppController {
     }
 
 
-    @GetMapping("/threads")
-    public String listThreads(Model model) {
-        List<Thread> listThreads = threadRepo.findAll();
-        model.addAttribute("listThreads", listThreads);
-        return "threads";
-    }
+//    @GetMapping("/threads")
+//    public String listThreads(Model model) {
+//        List<Thread> listThreads = threadRepo.findAll();
+//        model.addAttribute("listThreads", listThreads);
+//        return "threads";
+//    }
 
     @RequestMapping("/threads/{id}")
-    public ModelAndView showThread(@PathVariable(name = "id") int id) {
+    public ModelAndView showThread(@PathVariable(name = "id") int id, Principal user) {
+        int userID = Math.toIntExact(userRepo.findByEmail(user.getName()).getId());
         ModelAndView mav = new ModelAndView("thread_detail");
         Thread t = threadRepo.getById((long) id);
+        List<Post> posts = postRepo.findPosts(id);
+        if (posts.size() == 0) {
+            Post fakePost = new Post();
+            fakePost.setId(0L);
+            fakePost.setTitle("No Posts");
+            fakePost.setBody("This Thread has no posts on it!");
+            posts.add(fakePost);
+        }
         mav.addObject("thread", t);
+        mav.addObject("posts", posts);
+        mav.addObject("CUR_USER_ID", userID);
         return mav;
     }
+    @RequestMapping("/threads/{id}/new_post")
+    public String showCreatePost(@PathVariable(name = "id") int id, Model model) {
+        model.addAttribute("post", new Post());
+        model.addAttribute("THREAD_ID", id);
+        return "create_post";
+    }
+    @RequestMapping(value = "/threads/{id}/process_new_post", method = RequestMethod.POST)
+    public String processCreatePOst(@PathVariable(name = "id") int id, Post post, Principal user) {
+        int userID = Math.toIntExact(userRepo.findByEmail(user.getName()).getId());
+        Thread t = threadRepo.getSingularThread((long) userID);
+        System.out.println(">>>>>" + t.getTitle());
+        int threadOwnerID = Math.toIntExact(t.getId());
+        System.out.println(">>>>>" + userID + ", " + threadOwnerID);
+        if (userID == threadOwnerID) {
+            post.setThread(id);
+            postRepo.save(post);
+            return "redirect:/threads/" + id;
+        }
 
+        return "redirect:/error";
+    }
+    @GetMapping("/error")
+    public String showErrorPage() {
+        return "error";
+    }
     @GetMapping("/posts")
     public String listPosts(Model model) {
         List<Post> listPosts = postRepo.findAll();

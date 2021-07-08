@@ -36,7 +36,7 @@
             <tbody>
             <tr th:each="t: ${threads}">
                 <td th:text="${t.id}">Thread ID</td>
-                <td th:text="${t.title}">Title</td>
+                <td><a th:text="${t.title}" th:href="@{'/threads/' + ${t.id}}"></a></td>
             </tr>
             </tbody>
         </table>
