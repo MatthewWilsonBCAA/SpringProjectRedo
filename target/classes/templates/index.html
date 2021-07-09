@@ -13,11 +13,13 @@
 <i>Welcome!</i>
 <div>
     <div class="container text-center">
-        <h3><a th:href="@{/users}">List of Users</a></h3>
         <h3><a th:href="@{/register}">Register</a></h3>
         <h3><a th:href="@{/login}">Login</a></h3>
-        <h3><a th:href="@{/new_thread}">Create New Thread</a></h3>
-    </div>
+        <div th:if="${#authentication == null}">
+            <h3><a th:href="@{/users}">List of Users</a></h3>
+            <h3><a th:href="@{/new_thread}">Create New Thread</a></h3>
+        </div>
+        </div>
     <div>
         <h2>Purpose</h2>
         <p>On-Track is a site for developers to keep track of their projects, and for fans and other devs to

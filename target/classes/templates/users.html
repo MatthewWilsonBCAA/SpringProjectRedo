@@ -10,6 +10,7 @@
 <body>
 <div class="container text-center">
     <div>
+        <h3><a th:href="@{/new_thread}">Create New Thread</a></h3>
         <form th:action="@{/logout}" method="post">
             <p>
                 Welcome <b>[[${#request.userPrincipal.principal.fullName}]]</b>
